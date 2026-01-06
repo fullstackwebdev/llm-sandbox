@@ -95,6 +95,10 @@ def _create_backend_session(
             # Filter it out from kwargs if it's present to avoid TypeError
             kubernetes_kwargs = {k: v for k, v in kwargs.items() if k != "runtime_configs"}
             return SandboxKubernetesSession(**kubernetes_kwargs)
+        case SandboxBackend.FIRECRACKER:
+            from llm_sandbox.firecracker import SandboxFirecrackerSession
+
+            return SandboxFirecrackerSession(runtime_configs=runtime_configs, **kwargs)
         case _:
             raise UnsupportedBackendError(backend=backend)
 

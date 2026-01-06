@@ -110,5 +110,10 @@ def create_pool_manager(
 
             return PodmanPoolManager(client=client, config=config, lang=lang, **kwargs)
 
+        case SandboxBackend.FIRECRACKER:
+            from llm_sandbox.pool.firecracker_pool import FirecrackerPoolManager
+
+            return FirecrackerPoolManager(client=client, config=config, lang=lang, **kwargs)
+
         case _:
             raise UnsupportedBackendError(backend)
